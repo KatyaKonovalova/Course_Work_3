@@ -18,7 +18,7 @@ for operation in all_operations:
 
 sorted_operations = sorted(list_of_completed_operations, key=operator.itemgetter('date'), reverse=True)
 result = sorted_operations[:5]
-print(result)
+# print(result)
 
 
 def getting_path_from():
@@ -37,7 +37,7 @@ def getting_path_from():
             path_from = path_from.split()[0] + ' ' + formatted_number_from
             list_path_from.append(path_from)
 
-    print(list_path_from)
+    # print(list_path_from)
 
     return list_path_from
 
@@ -53,7 +53,7 @@ def getting_path_to():
         path_to = path_to.split()[0] + ' ' + formatted_number
         list_path_to.append(path_to)
 
-    print(list_path_to)
+    # print(list_path_to)
 
     return list_path_to
 
