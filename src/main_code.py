@@ -1,15 +1,15 @@
 from src import functions
+i = 0
 
-for item in range(len(functions.getting_path_from())):
-    item_for = functions.getting_path_from()[item]
-    item_to = functions.getting_path_to()[item]
+while i < 5:
 
-for item_day in range(len(functions.formatted_date())):
-    item_date = functions.formatted_date()[item_day]
+    print(functions.formatted_date()[i], functions.getting_description()[i])
+    print(f'{functions.getting_path_from()[i]} -> {functions.getting_path_to()[i]}')
+    print(functions.getting_operation_amount()[i], functions.getting_operation_currency()[i], end='\n\n')
 
-for item_description in range(len(functions.getting_description())):
-    item_d = functions.getting_description()[item_description]
-    print(item_date, item_d)
-    print(f'{item_for} -> {item_to}')
+    i += 1
+
+
+
 
 

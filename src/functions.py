@@ -7,10 +7,14 @@ list_path_from = []
 list_path_to = []
 list_date = []
 list_description = []
+list_operation = []
+list_operation_amount = []
+list_operation_currency = []
+list_operation_name = []
+
 
 with open(os.path.join('operations.json'), encoding='utf8') as file:
     all_operations = json.load(file)
-    # print(all_operations)
 
 
 for operation in all_operations:
@@ -20,7 +24,6 @@ for operation in all_operations:
 
 sorted_operations = sorted(list_of_completed_operations, key=operator.itemgetter('date'), reverse=True)
 result = sorted_operations[:5]
-# print(result)
 
 
 def getting_path_from():
@@ -53,11 +56,7 @@ def getting_path_from():
             path_from = path_from.split()[0] + ' ' + formatted_number_from
             list_path_from.append(path_from)
 
-    # print(list_path_from)
-
     return list_path_from
-
-# getting_path_from()
 
 
 def getting_path_to():
@@ -69,11 +68,7 @@ def getting_path_to():
         path_to = path_to.split()[0] + ' ' + formatted_number
         list_path_to.append(path_to)
 
-    # print(list_path_to)
-
     return list_path_to
-
-# getting_path_to()
 
 
 def formatted_date():
@@ -83,23 +78,38 @@ def formatted_date():
         date_result = datetime_obj.strftime("%d.%m.%Y")
         list_date.append(date_result)
 
-    # print(list_date)
-
     return list_date
-
-# formatted_date()
 
 
 def getting_description():
 
     for current_operation in result:
-        description = current_operation.get('description')
-        list_description.append(description)
-
-    # print(list_description)
+        # description = current_operation.get('description')
+        list_description.append(current_operation.get('description'))
 
     return list_description
 
-# getting_description()
+
+def getting_operation_amount():
+
+    for current_operation in result:
+        operation_amount = current_operation.get('operationAmount')
+        list_operation.append(operation_amount)
+        list_operation_amount.append(operation_amount.get('amount'))
+
+    return list_operation_amount
+
+
+def getting_operation_currency():
+    for current_operation in result:
+        operation_amount = current_operation.get('operationAmount')
+        list_operation.append(operation_amount)
+        list_operation_currency.append(operation_amount.get('currency'))
+
+    for money_name in list_operation_currency:
+        list_operation_name.append(money_name.get('name'))
+
+    return list_operation_name
+
 
 
