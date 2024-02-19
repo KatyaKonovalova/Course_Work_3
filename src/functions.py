@@ -1,8 +1,4 @@
-import os
-import json
-import operator
 from datetime import datetime
-list_of_completed_operations = []
 list_path_from = []
 list_path_to = []
 list_date = []
@@ -12,21 +8,6 @@ list_operation_amount = []
 list_operation_currency = []
 list_operation_name = []
 
-
-# with open(os.path.join('../src/operations.json'), encoding='utf8') as file:
-#     all_operations = json.load(file)
-#
-#
-# '''Выборка списка словарей по значению EXECUTED, и из них вывод последних 5 операций'''
-#
-# for operation in all_operations:
-#     for key, value in operation.items():
-#         if key == 'state' and value == 'EXECUTED':
-#             list_of_completed_operations.append(operation)
-#
-# sorted_operations = sorted(list_of_completed_operations, key=operator.itemgetter('date'), reverse=True)
-# result = sorted_operations[:5]
-# print(result)
 
 def getting_path_from(data):
     """Вывод значений номеров карт/счетов откуда совершалась операция, в формате XXXX-XX**-****-XXXX"""
