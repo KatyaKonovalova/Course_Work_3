@@ -39,7 +39,7 @@ def getting_path_from(data):
             formatted_number_from = '-'.join(formatted_number_from[i * 4:(i + 1) * 4] for i in range(4))
             path_from = path_from.split()[0] + ' ' + formatted_number_from
             list_path_from.append(path_from)
-        # print(list_path_from)
+
     return list_path_from
 
 

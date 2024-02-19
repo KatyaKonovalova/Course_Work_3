@@ -6,8 +6,11 @@ import functions
 list_of_completed_operations = []
 i = 0
 
-with open(os.path.join('../src/operations.json'), encoding='utf8') as file:
-    all_operations = json.load(file)
+
+def formatted_operations():
+    with open(os.path.join('../src/operations.json'), encoding='utf8') as file:
+        all_operations = json.load(file)
+        return all_operations
 
 
 def getting_sorted_operations(operations):
@@ -23,7 +26,7 @@ def getting_sorted_operations(operations):
     return result
 
 
-result_of_sorted_operations = getting_sorted_operations(all_operations)
+result_of_sorted_operations = getting_sorted_operations(formatted_operations())
 result_formatted_date = functions.formatted_date(result_of_sorted_operations)
 result_description = functions.getting_description(result_of_sorted_operations)
 result_path_from = functions.getting_path_from(result_of_sorted_operations)
