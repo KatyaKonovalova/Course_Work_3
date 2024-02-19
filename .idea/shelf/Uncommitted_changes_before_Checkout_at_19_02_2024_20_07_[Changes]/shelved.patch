@@ -1,0 +1,23 @@
+Index: test/test_functions.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pytest\r\nfrom src import main_code\r\nfrom src import functions\r\n\r\n\r\ndef test_getting_description():\r\n\r\n    assert functions.getting_description(main_code.formatted_operations()) == functions.getting_description(main_code.getting_sorted_operations(main_code.formatted_operations()))\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/test/test_functions.py b/test/test_functions.py
+--- a/test/test_functions.py	
++++ b/test/test_functions.py	
+@@ -7,3 +7,12 @@
+ 
+     assert functions.getting_description(main_code.formatted_operations()) == functions.getting_description(main_code.getting_sorted_operations(main_code.formatted_operations()))
+ 
++import pytest
++from src import main_code
++from src import functions
++
++
++def test_getting_description():
++
++    assert functions.getting_description(main_code.formatted_operations()) == functions.getting_description(main_code.getting_sorted_operations(main_code.formatted_operations()))
++

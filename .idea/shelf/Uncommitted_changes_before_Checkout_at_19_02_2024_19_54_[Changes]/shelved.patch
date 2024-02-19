@@ -1,0 +1,12 @@
+Index: test/test_main_code.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>def test_():\r\n    pass
+===================================================================
+diff --git a/test/test_main_code.py b/test/test_main_code.py
+--- a/test/test_main_code.py	
++++ b/test/test_main_code.py	
+@@ -1,2 +1,0 @@
+-def test_():
+-    pass
+\ No newline at end of file

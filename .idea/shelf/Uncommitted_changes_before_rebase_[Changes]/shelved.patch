@@ -1,0 +1,195 @@
+Index: src/main_code.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import os\r\nimport json\r\nimport operator\r\nimport functions\r\n\r\nlist_of_completed_operations = []\r\ni = 0\r\n\r\nwith open(os.path.join('../src/operations.json'), encoding='utf8') as file:\r\n    all_operations = json.load(file)\r\n\r\n\r\ndef getting_sorted_operations(operations):\r\n    '''Выборка списка словарей по значению EXECUTED, и из них вывод последних 5 операций'''\r\n\r\n    for operation in operations:\r\n        for key, value in operation.items():\r\n            if key == 'state' and value == 'EXECUTED':\r\n                list_of_completed_operations.append(operation)\r\n\r\n    sorted_operations = sorted(list_of_completed_operations, key=operator.itemgetter('date'), reverse=True)\r\n    result = sorted_operations[:5]\r\n    return result\r\n\r\n\r\nresult_of_sorted_operations = getting_sorted_operations(all_operations)\r\nresult_formatted_date = functions.formatted_date(result_of_sorted_operations)\r\nresult_description = functions.getting_description(result_of_sorted_operations)\r\nresult_path_from = functions.getting_path_from(result_of_sorted_operations)\r\nresult_path_to = functions.getting_path_to(result_of_sorted_operations)\r\nresult_operation_amount = functions.getting_operation_amount(result_of_sorted_operations)\r\nresult_operation_currency = functions.getting_operation_currency(result_of_sorted_operations)\r\n\r\nwhile i < 5:\r\n\r\n    print(result_formatted_date[i], result_description[i])\r\n    print(f'{result_path_from[i]} -> {result_path_to[i]}')\r\n    print(result_operation_amount[i], result_operation_currency[i], end='\\n\\n')\r\n\r\n    i += 1\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main_code.py b/src/main_code.py
+--- a/src/main_code.py	(revision 7230c7bed923ede28d70fadc6b496ff166285613)
++++ b/src/main_code.py	(date 1708362296706)
+@@ -6,8 +6,11 @@
+ list_of_completed_operations = []
+ i = 0
+ 
+-with open(os.path.join('../src/operations.json'), encoding='utf8') as file:
+-    all_operations = json.load(file)
++
++def formatted_operations():
++    with open(os.path.join('../src/operations.json'), encoding='utf8') as file:
++        all_operations = json.load(file)
++        return all_operations
+ 
+ 
+ def getting_sorted_operations(operations):
+@@ -23,9 +26,11 @@
+     return result
+ 
+ 
+-result_of_sorted_operations = getting_sorted_operations(all_operations)
++result_of_sorted_operations = getting_sorted_operations(formatted_operations())
++print(result_of_sorted_operations)
+ result_formatted_date = functions.formatted_date(result_of_sorted_operations)
+ result_description = functions.getting_description(result_of_sorted_operations)
++print(result_description)
+ result_path_from = functions.getting_path_from(result_of_sorted_operations)
+ result_path_to = functions.getting_path_to(result_of_sorted_operations)
+ result_operation_amount = functions.getting_operation_amount(result_of_sorted_operations)
+Index: test/test_functions.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/test/test_functions.py b/test/test_functions.py
+--- a/test/test_functions.py	(revision 7230c7bed923ede28d70fadc6b496ff166285613)
++++ b/test/test_functions.py	(date 1708362296712)
+@@ -1,0 +1,9 @@
++import pytest
++from src import main_code
++from src import functions
++
++
++def test_getting_description():
++
++    assert functions.getting_description(main_code.formatted_operations()) == functions.getting_description(main_code.getting_sorted_operations(main_code.formatted_operations()))
++
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"1a368841-61f4-4beb-849d-c8c68eb74430\" name=\"Changes\" comment=\"\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\"><![CDATA[{\r\n  \"associatedIndex\": 7\r\n}]]></component>\r\n  <component name=\"ProjectId\" id=\"2cY3XTjCdKyxQPyhlnio1XkVGcv\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"git-widget-placeholder\": \"main\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-python-sdk-5a2391486177-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13763.11\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"1a368841-61f4-4beb-849d-c8c68eb74430\" name=\"Changes\" comment=\"\" />\r\n      <created>1708274723526</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1708274723526</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 7230c7bed923ede28d70fadc6b496ff166285613)
++++ b/.idea/workspace.xml	(date 1708362328818)
+@@ -10,22 +10,99 @@
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="ProjectColorInfo"><![CDATA[{
+-  "associatedIndex": 7
+-}]]></component>
++  <component name="ProjectColorInfo">{
++  &quot;associatedIndex&quot;: 7
++}</component>
+   <component name="ProjectId" id="2cY3XTjCdKyxQPyhlnio1XkVGcv" />
+   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "git-widget-placeholder": "main"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;main&quot;
+   }
+-}]]></component>
++}</component>
++  <component name="RunManager">
++    <configuration name="functions" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
++      <module name="Course_Work_0.2" />
++      <option name="ENV_FILES" value="" />
++      <option name="INTERPRETER_OPTIONS" value="" />
++      <option name="PARENT_ENVS" value="true" />
++      <envs>
++        <env name="PYTHONUNBUFFERED" value="1" />
++      </envs>
++      <option name="SDK_HOME" value="" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
++      <option name="IS_MODULE_SDK" value="true" />
++      <option name="ADD_CONTENT_ROOTS" value="true" />
++      <option name="ADD_SOURCE_ROOTS" value="true" />
++      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/functions.py" />
++      <option name="PARAMETERS" value="" />
++      <option name="SHOW_COMMAND_LINE" value="false" />
++      <option name="EMULATE_TERMINAL" value="false" />
++      <option name="MODULE_MODE" value="false" />
++      <option name="REDIRECT_INPUT" value="false" />
++      <option name="INPUT_FILE" value="" />
++      <method v="2" />
++    </configuration>
++    <configuration name="Python tests for test_functions.test_getting_description" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
++      <module name="Course_Work_0.2" />
++      <option name="ENV_FILES" value="" />
++      <option name="INTERPRETER_OPTIONS" value="" />
++      <option name="PARENT_ENVS" value="true" />
++      <option name="SDK_HOME" value="" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
++      <option name="IS_MODULE_SDK" value="true" />
++      <option name="ADD_CONTENT_ROOTS" value="true" />
++      <option name="ADD_SOURCE_ROOTS" value="true" />
++      <option name="_new_additionalArguments" value="&quot;&quot;" />
++      <option name="_new_target" value="&quot;test_functions.test_getting_description&quot;" />
++      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
++      <method v="2" />
++    </configuration>
++    <configuration name="Python tests for test_functions.test_getting_path_from" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
++      <module name="Course_Work_0.2" />
++      <option name="ENV_FILES" value="" />
++      <option name="INTERPRETER_OPTIONS" value="" />
++      <option name="PARENT_ENVS" value="true" />
++      <option name="SDK_HOME" value="" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
++      <option name="IS_MODULE_SDK" value="true" />
++      <option name="ADD_CONTENT_ROOTS" value="true" />
++      <option name="ADD_SOURCE_ROOTS" value="true" />
++      <option name="_new_additionalArguments" value="&quot;&quot;" />
++      <option name="_new_target" value="&quot;test_functions.test_getting_path_from&quot;" />
++      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
++      <method v="2" />
++    </configuration>
++    <configuration name="Python tests for test_functions.test_getting_test_to" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
++      <module name="Course_Work_0.2" />
++      <option name="ENV_FILES" value="" />
++      <option name="INTERPRETER_OPTIONS" value="" />
++      <option name="PARENT_ENVS" value="true" />
++      <option name="SDK_HOME" value="" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
++      <option name="IS_MODULE_SDK" value="true" />
++      <option name="ADD_CONTENT_ROOTS" value="true" />
++      <option name="ADD_SOURCE_ROOTS" value="true" />
++      <option name="_new_additionalArguments" value="&quot;&quot;" />
++      <option name="_new_target" value="&quot;test_functions.test_getting_test_to&quot;" />
++      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
++      <method v="2" />
++    </configuration>
++    <recent_temporary>
++      <list>
++        <item itemvalue="Python tests.Python tests for test_functions.test_getting_test_to" />
++        <item itemvalue="Python tests.Python tests for test_functions.test_getting_path_from" />
++        <item itemvalue="Python tests.Python tests for test_functions.test_getting_description" />
++        <item itemvalue="Python.functions" />
++      </list>
++    </recent_temporary>
++  </component>
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+Index: src/try.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/try.py b/src/try.py
+new file mode 100644
+--- /dev/null	(date 1708362296707)
++++ b/src/try.py	(date 1708362296707)
+@@ -0,0 +1,11 @@
++import os
++import json
++import operator
++list_of_completed_operations = []
++
++
++def try_test():
++
++
++
++    return result
