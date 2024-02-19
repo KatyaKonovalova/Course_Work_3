@@ -1,2 +1,1 @@
-def test_():
-    pass
+print(os.path.abspath("operations.json"))
