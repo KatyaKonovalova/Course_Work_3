@@ -26,18 +26,19 @@ def getting_sorted_operations(operations):
     return result
 
 
-result_of_sorted_operations = getting_sorted_operations(formatted_operations())
-result_formatted_date = functions.formatted_date(result_of_sorted_operations)
-result_description = functions.getting_description(result_of_sorted_operations)
-result_path_from = functions.getting_path_from(result_of_sorted_operations)
-result_path_to = functions.getting_path_to(result_of_sorted_operations)
-result_operation_amount = functions.getting_operation_amount(result_of_sorted_operations)
-result_operation_currency = functions.getting_operation_currency(result_of_sorted_operations)
+for current_operation in getting_sorted_operations(formatted_operations()):
 
-while i < 5:
+    date_output = functions.formatted_date(current_operation.get('date'))
+    description_output = current_operation.get('description')
+    path_from_output = functions.getting_path_from(current_operation.get('from'))
+    path_to_output = functions.getting_path_from(current_operation.get('to'))
+    amount_output = current_operation.get('operationAmount').get('amount')
+    name_output = current_operation.get('operationAmount').get('currency').get('name')
 
-    print(result_formatted_date[i], result_description[i])
-    print(f'{result_path_from[i]} -> {result_path_to[i]}')
-    print(result_operation_amount[i], result_operation_currency[i], end='\n\n')
+    print(date_output, description_output)
+    if path_from_output == '':
+        print(path_to_output)
+    else:
+        print(f'{path_from_output} -> {path_to_output}')
 
-    i += 1
+    print(amount_output, name_output, end='\n\n')
